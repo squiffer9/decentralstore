@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  ipfs:
+    image: ipfs/go-ipfs:latest
+    ports:
+      - "4001:4001"
+      - "5001:5001"
+      - "8080:8080"
+    volumes:
+      - ./ipfs_data:/data/ipfs
+
+  ganache:
+    image: trufflesuite/ganache:latest
+    ports:
+      - "8545:8545"
+    command: --wallet.deterministic
+
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
