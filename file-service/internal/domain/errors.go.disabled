@@ -1,0 +1,36 @@
+package domain
+
+import "fmt"
+
+// ErrNotFound はリソースが見つからない場合のエラーです
+type ErrNotFound struct {
+	Resource string
+	ID       string
+}
+
+func (e *ErrNotFound) Error() string {
+	return fmt.Sprintf("%s with ID %s not found", e.Resource, e.ID)
+}
+
+// ErrInvalidKeyword は無効なキーワードが使用された場合のエラーです
+type ErrInvalidKeyword struct {
+	Operation string
+}
+
+func (e *ErrInvalidKeyword) Error() string {
+	return fmt.Sprintf("Invalid keyword for %s operation", e.Operation)
+}
+
+// ErrStorageOperation はストレージ操作に失敗した場合のエラーです
+type ErrStorageOperation struct {
+	Operation string
+	Err       error
+}
+
+func (e *ErrStorageOperation) Error() string {
+	return fmt.Sprintf("Storage operation '%s' failed: %v", e.Operation, e.Err)
+}
+
+func (e *ErrStorageOperation) Unwrap() error {
+	return e.Err
+}
